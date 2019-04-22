@@ -5,18 +5,38 @@ import java.util.List;
 
 import com.bigbox.b2csite.order.service.impl.OrderServiceImpl;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import com.bigbox.b2csite.order.dao.OrderDao;
 import com.bigbox.b2csite.order.model.domain.OrderSummary;
 import com.bigbox.b2csite.order.model.entity.OrderEntity;
 import com.bigbox.b2csite.order.model.transformer.OrderEntityToOrderSummaryTransformer;
-
+import org.mockito.MockitoAnnotations;
 
 public class OrderServiceImplTest {
 
     private final static long CUSTOMER_ID = 1L;
+
+//    protected OrderDao mockOrderDao;
+//    protected OrderEntityToOrderSummaryTransformer mockTransformer;
+
+    //This is an example using the @Mock annotation that allows the intialization of annotation members all at once.
+
+      @Mock private OrderDao mockOrderDao;
+      @Mock private OrderEntityToOrderSummaryTransformer mockTransformer;
+
+
+    @Before
+    public void setup(){
+
+        MockitoAnnotations.initMocks(this);  //This reduces creating the previous references below.
+
+//        this.mockOrderDao = Mockito.mock(OrderDao.class);
+//        this.mockTransformer = Mockito.mock(OrderEntityToOrderSummaryTransformer.class);
+    }
 
 
     @Test
@@ -25,11 +45,7 @@ public class OrderServiceImplTest {
             // Setup
             OrderServiceImpl target = new OrderServiceImpl();
 
-
-            OrderDao mockOrderDao = Mockito.mock(OrderDao.class);
             target.setOrderDao(mockOrderDao);
-
-            OrderEntityToOrderSummaryTransformer mockTransformer = Mockito.mock(OrderEntityToOrderSummaryTransformer.class);
             target.setTransformer(mockTransformer);
 
             OrderEntity orderEntityFixture = new OrderEntity();
